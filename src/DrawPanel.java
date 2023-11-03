@@ -1,3 +1,7 @@
+import Drawers.Pixel.BufferedImagePixelDrawer;
+import Drawers.Pixel.PixelDrawer;
+import Geometry.Vec2;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,12 +20,7 @@ public class DrawPanel extends JPanel {
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         clearImage(image);
-
-        // TODO add work with our implementation
-        Graphics2D imageGraphics = image.createGraphics();
-        imageGraphics.setColor(Color.BLACK);
-        imageGraphics.drawLine(0, 0, 200, 200);
-        imageGraphics.dispose();
+        drawOnImage(image);
 
         canvas.drawImage(image, 0, 0, null);
     }
@@ -34,5 +33,10 @@ public class DrawPanel extends JPanel {
         imageGraphics.setColor(Color.BLACK);
 
         imageGraphics.dispose();
+    }
+
+    protected void drawOnImage(BufferedImage image){
+        PixelDrawer pixelDrawer = new BufferedImagePixelDrawer(image);
+        pixelDrawer.drawPixel(new Vec2(100, 100));
     }
 }
