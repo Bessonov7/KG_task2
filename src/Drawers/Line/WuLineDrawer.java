@@ -30,21 +30,22 @@ public class WuLineDrawer implements GradientLineDrawer{
         double gradient = (double) delta.y/delta.x;
         double intersect = line.start.y;
 
+        interface PointFactory{
+            Vec2 create(int x, int y);
+        }
+
+        PointFactory pointCreate = !steep ? Vec2::new : (x, y) -> new Vec2(x, y).swapPoints();
+
         // work with color
         int diff = line.end.x - line.start.x;
         double diffR = (color2.getRed() - color1.getRed()) / (double) diff;
         double diffG = (color2.getGreen() - color1.getGreen()) / (double) diff;
         double diffB = (color2.getBlue() - color1.getBlue()) / (double) diff;
 
-
         for (int step = line.start.x ; step <= line.end.x ; step++) {
 
-            Vec2 pos = new Vec2(step, (int) intersect);
-            Vec2 pos1 = new Vec2(step, (int) intersect + 1);
-            if (steep){
-                pos = pos.swapPoints();
-                pos1 = pos1.swapPoints();
-            }
+            Vec2 pos = pointCreate.create(step, (int) intersect);
+            Vec2 pos1 = pointCreate.create(step, (int) intersect + 1);
 
             double bright = intersect - (int) intersect;
 
@@ -53,7 +54,6 @@ public class WuLineDrawer implements GradientLineDrawer{
             int g = (int) (color1.getGreen() + diffG * step_d);
             int b = (int) (color1.getBlue() + diffB * step_d);
             drawer.setColor(new Color(r, g, b));
-
             drawer.drawPixel(pos, 1 - bright);
             drawer.drawPixel(pos1, bright);
             intersect += gradient;
