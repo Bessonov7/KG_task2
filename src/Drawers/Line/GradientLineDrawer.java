@@ -1,8 +1,8 @@
 package Drawers.Line;
 
 
-import Geometry.Drawer.Pixel.PixelDrawer;
-import Geometry.Line.Line;
+import Drawers.Pixel.PixelDrawer;
+import Geometry.Line;
 
 import java.awt.*;
 
