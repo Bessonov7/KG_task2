@@ -1,5 +1,8 @@
+import Drawers.Line.LineDrawer;
+import Drawers.Line.WuLineDrawer;
 import Drawers.Pixel.BufferedImagePixelDrawer;
 import Drawers.Pixel.PixelDrawer;
+import Geometry.Line;
 import Geometry.Vec2;
 
 import javax.swing.*;
@@ -37,6 +40,8 @@ public class DrawPanel extends JPanel {
 
     protected void drawOnImage(BufferedImage image){
         PixelDrawer pixelDrawer = new BufferedImagePixelDrawer(image);
-        pixelDrawer.drawPixel(new Vec2(100, 100));
+        LineDrawer lineDrawer = new WuLineDrawer();
+
+        lineDrawer.drawLine(new Line(new Vec2(100, 100), new Vec2(200, 400)), pixelDrawer, Color.BLACK);
     }
 }
