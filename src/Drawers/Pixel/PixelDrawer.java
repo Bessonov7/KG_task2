@@ -10,4 +10,6 @@ public interface PixelDrawer {
 
     void setColor(Color color);
 
+    void drawPixel(Vec2 pos, double bright);
+
 }

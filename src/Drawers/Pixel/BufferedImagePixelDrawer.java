@@ -27,4 +27,17 @@ public class BufferedImagePixelDrawer implements PixelDrawer {
     public void setColor(Color color){
         this.color = color;
     }
+
+    @Override
+    public void drawPixel(Vec2 pos, double bright) {
+        int alpha = (int) (bright * 255);
+        int mc = (alpha << 24) | 0x00ffffff;
+        int newcolor = color.getRGB() & mc;
+        try {
+            image.setRGB(pos.x, pos.y, newcolor);
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {
+
+        }
+    }
 }
