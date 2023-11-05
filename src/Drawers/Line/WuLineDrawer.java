@@ -12,7 +12,7 @@ public class WuLineDrawer implements GradientLineDrawer{
         boolean steep = Math.abs(line.end.y - line.start.y) > Math.abs(line.end.x - line.start.x);
         if (steep)
         {
-            line = new Line(new Vec2(line.start.y, line.start.x), new Vec2(line.end.y, line.end.x));
+            line = new Line(line.start.swapPoints(), line.end.swapPoints());
         }
         if (line.start.x > line.end.x)
         {
@@ -31,8 +31,8 @@ public class WuLineDrawer implements GradientLineDrawer{
             Vec2 pos = new Vec2(step, (int) intersect);
             Vec2 pos1 = new Vec2(step, (int) intersect + 1);
             if (steep){
-                pos = new Vec2(pos.y, pos.x);
-                pos1 = new Vec2(pos1.y, pos1.x);
+                pos = pos.swapPoints();
+                pos1 = pos1.swapPoints();
             }
 
             double bright = intersect - (int) intersect;
