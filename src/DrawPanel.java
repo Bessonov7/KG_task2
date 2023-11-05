@@ -1,3 +1,4 @@
+import Drawers.Line.GradientLineDrawer;
 import Drawers.Line.LineDrawer;
 import Drawers.Line.WuLineDrawer;
 import Drawers.Pixel.BufferedImagePixelDrawer;
@@ -40,8 +41,14 @@ public class DrawPanel extends JPanel {
 
     protected void drawOnImage(BufferedImage image){
         PixelDrawer pixelDrawer = new BufferedImagePixelDrawer(image);
-        LineDrawer lineDrawer = new WuLineDrawer();
+        GradientLineDrawer lineDrawer = new WuLineDrawer();
 
-        lineDrawer.drawLine(new Line(new Vec2(100, 100), new Vec2(200, 400)), pixelDrawer, Color.BLACK);
+        lineDrawer.drawLine(new Line(new Vec2(100, 100), new Vec2(400, 400)), pixelDrawer, Color.BLACK);
+
+        lineDrawer.drawLineGradient(new Line(new Vec2(100, 100), new Vec2(100, 400)), pixelDrawer,
+                Color.RED, Color.BLUE);
+
+        lineDrawer.drawLineGradient(new Line(new Vec2(100, 100), new Vec2(400, 200)), pixelDrawer,
+                Color.RED, Color.GREEN);
     }
 }

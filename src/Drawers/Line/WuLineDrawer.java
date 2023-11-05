@@ -9,6 +9,11 @@ import java.awt.*;
 public class WuLineDrawer implements GradientLineDrawer{
     @Override
     public void drawLine(Line line, PixelDrawer drawer, Color color) {
+        drawLineGradient(line, drawer, color, color);
+    }
+
+    @Override
+    public void drawLineGradient(Line line, PixelDrawer drawer, Color color1, Color color2) {
         boolean steep = Math.abs(line.end.y - line.start.y) > Math.abs(line.end.x - line.start.x);
         if (steep)
         {
@@ -25,7 +30,13 @@ public class WuLineDrawer implements GradientLineDrawer{
         double gradient = (double) delta.y/delta.x;
         double intersect = line.start.y;
 
-        drawer.setColor(color);
+        // work with color
+        int diff = line.end.x - line.start.x;
+        double diffR = (color2.getRed() - color1.getRed()) / (double) diff;
+        double diffG = (color2.getGreen() - color1.getGreen()) / (double) diff;
+        double diffB = (color2.getBlue() - color1.getBlue()) / (double) diff;
+
+
         for (int step = line.start.x ; step <= line.end.x ; step++) {
 
             Vec2 pos = new Vec2(step, (int) intersect);
@@ -37,14 +48,15 @@ public class WuLineDrawer implements GradientLineDrawer{
 
             double bright = intersect - (int) intersect;
 
+            int step_d = step - line.start.x;
+            int r = (int) (color1.getRed() + diffR * step_d);
+            int g = (int) (color1.getGreen() + diffG * step_d);
+            int b = (int) (color1.getBlue() + diffB * step_d);
+            drawer.setColor(new Color(r, g, b));
+
             drawer.drawPixel(pos, 1 - bright);
             drawer.drawPixel(pos1, bright);
             intersect += gradient;
         }
-    }
-
-    @Override
-    public void drawLineGradient(Line line, PixelDrawer drawer, Color color1, Color color2) {
-
     }
 }
